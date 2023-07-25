@@ -5,3 +5,4 @@ nginx_error.log
 media/todo/files
 env
 __pycache__/
+static
