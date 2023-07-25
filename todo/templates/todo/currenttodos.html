@@ -11,11 +11,11 @@
         </div>
     </div>
     <div class="row justify-content-center mt-5">
-        <div class="col-md-10">
+        <div class="col-md-8">
         {% if todos %}
             <div class="list-group">
                 {% for todo in todos %}
-                    <a href="{% url 'viewtodo' todo.id %}" class="list-group-item list-group-item-action{% if todo.Important %} list-group-item-danger{% endif %}"><b>{{ todo.Title }}</b>{% if todo.memo %} - {{ todo.memo|truncatechars:30 }}{% endif %}</a>
+                    <a href="{% url 'viewtodo' todo.id %}" class="list-group-item list-group-item-action{% if todo.Important %} list-group-item-danger{% endif %}"><b>{{ todo.Title }}</b>{% if todo.file %}  <span style="padding-left: 35px;">👉🏿 {{ todo.file.name|truncatechars:50 }}{% endif %}</span></a>
                 {% endfor %}
             </div>
         {% else %}

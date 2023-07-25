@@ -10,7 +10,7 @@
         <div class="col-md-10">
             <div class="list-group">
                 {% for todo in todos %}
-                    <a href="{% url 'viewcompletedtodo' todo.id %}" class="list-group-item list-group-item-action{% if todo.Important %} list-group-item-danger{% endif %}"><b>{{ todo.Title }}</b> - Completed {{ todo.Datecompleted|date:'M j Y H:i' }}</a>
+                    <a href="{% url 'viewcompletedtodo' todo.id %}" class="list-group-item list-group-item-success{% if todo.Important %} list-group-item-success{% endif %}"><b>{{ todo.Title }}</b> - Completed {{ todo.Datecompleted|date:'M j Y H:i' }}</a>
                 {% endfor %}
             </div>
         </div>

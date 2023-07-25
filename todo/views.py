@@ -3,10 +3,11 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .forms import TodoForm
-from .models import Todo
+from .forms import TodoForm, FileForm
+from .models import Todo, File
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from .utils import find_file
 
 
 def home(request):
@@ -62,12 +63,35 @@ def createtodo(request):
             newtodo = form.save(commit=False)
             newtodo.user = request.user
             newtodo.save()
+            if request.POST.get('file'):
+                print(newtodo.pk)
+                return redirect('todo_file', newtodo.pk)
             return redirect('currenttodos')
         except ValueError:
             return render(request, 'todo/createtodo.html',
                           {'form': TodoForm(), 'error': 'Bad data passed in. Try again'})
 
 
+def todo_file(request, todo_pk):
+    todo = Todo.objects.get(pk=todo_pk)
+    if todo and request.method == 'GET':
+        if find_file(todo) and request.user.username == todo.user.username:
+            return redirect('currenttodos')
+        elif find_file(todo) and request.user.username != todo.user.username:
+            return redirect('currenttodos')
+        elif request.user.username != todo.user.username:
+            return redirect('currenttodos')
+        else:
+            return render(request, 'todo/upload_file.html')
+    else:
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_file = form.save(commit=False)
+            new_file.save()
+            todo.file = new_file
+            todo.save()
+            return redirect('currenttodos')
+        print(form)
 @login_required()
 def currenttodos(request):
     todos = Todo.objects.filter(user=request.user, Datecompleted__isnull=True)
@@ -78,8 +102,11 @@ def currenttodos(request):
 def viewtodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'GET':
-        form = TodoForm(instance=todo)
-        return render(request, 'todo/viewtodo.html', {'todo': todo, 'form': form})
+        if find_file(todo.Title):
+            return render(request, 'todo/viewtodo.html', {'todo': todo,'file': todo.file.file })
+        else:
+            form = TodoForm(instance=todo)
+            return render(request, 'todo/viewtodo.html', {'todo': todo, 'form': form})
     else:
         try:
             form = TodoForm(request.POST, instance=todo)

@@ -1,0 +1,6 @@
+db.sqlite3
+gunicorn_access.log
+gunicorn_error.log
+nginx_error.log
+media/todo/files
+env

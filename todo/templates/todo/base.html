@@ -10,15 +10,14 @@
     {% load static %}
     <link href="{% static 'todo/logo.png' %}" rel="icon" type="image/png">
     <title>Todo Woo</title>
+
 </head>
 <body>
-
-
-<nav class="navbar navbar-expand-md navbar-light bg-warning">
+<nav class="navbar navbar-expand-md navbar-light bg-warning" style="background: #35798b!important;">
 <div class="container">
     <a class="navbar-brand" href="{% url 'home' %}">
          <img src="{% static 'todo/logo.png' %}" width="30" height="30" class="d-inline-block align-top">
-        <span>Todo Woo</span>
+        <span class="text-light">Todo Woo</span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -42,7 +41,7 @@
     <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">Logout</a>
+                    <a href="#" onclick="$('#signOutBtn').click()" class="nav-link text-light">Logout</a>
                     <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
                         {% csrf_token %}
                         <button id="signOutBtn" type="submit">Logout</button>
@@ -50,10 +49,10 @@
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signupuser' %}">Sign Up</a>
+                    <a class="nav-link text-light" href="{% url 'signupuser' %}">Sign Up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'loginuser' %}">Login</a>
+                    <a class="nav-link text-light" href="{% url 'loginuser' %}">Login</a>
                 </li>
             {% endif %}
         </ul>
@@ -65,6 +64,7 @@
 </div>
 
 <!-- Optional JavaScript -->
+
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
