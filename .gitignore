@@ -6,3 +6,4 @@ media/todo/files
 env
 __pycache__/
 static
+.idea
