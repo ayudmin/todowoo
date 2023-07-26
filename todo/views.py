@@ -103,7 +103,7 @@ def viewtodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'GET':
         if find_file(todo.Title):
-            return render(request, 'todo/viewtodo.html', {'todo': todo,'file': todo.file.file })
+            return render(request, 'todo/viewtodo.html', {'todo': todo, 'file': todo.file.file})
         else:
             form = TodoForm(instance=todo)
             return render(request, 'todo/viewtodo.html', {'todo': todo, 'form': form})
@@ -121,8 +121,11 @@ def viewtodo(request, todo_pk):
 def viewcompletedtodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'GET':
-        form = TodoForm(instance=todo)
-        return render(request, 'todo/viewcompletedtodo.html', {'todo': todo, 'form': form})
+        if find_file(todo.Title):
+            return render(request, 'todo/viewcompletedtodo.html', {'todo': todo, 'file': todo.file.file})
+        else:
+            form = TodoForm(instance=todo)
+            return render(request, 'todo/viewcompletedtodo.html', {'todo': todo, 'form': form})
     else:
         try:
             form = TodoForm(request.POST, instance=todo)
