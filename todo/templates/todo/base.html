@@ -16,8 +16,8 @@
 <nav class="navbar navbar-expand-md navbar-light bg-warning" style="background: #35798b!important;">
 <div class="container">
     <a class="navbar-brand" href="{% url 'home' %}">
-         <img src="{% static 'todo/logo.png' %}" width="30" height="30" class="d-inline-block align-top">
-        <span class="text-light">Todo Woo</span>
+        <img src="{% static 'todo/logo.png' %}" width="30" height="30" class="d-inline-block align-top">
+        <span class="text-light" style="font-style: italic; padding-left: 5px; font-weight: 900; font-family: fangsong;">Todo Woo</span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -41,10 +41,10 @@
     <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="#" onclick="$('#signOutBtn').click()" class="nav-link text-light">Logout</a>
+                    <a href="#" onclick="$('#signOutBtn').click()" class="nav-link text-light" style="font-style: italic; padding-left: 5px; font-weight: 900; font-family: fangsong;">Logout</a>
                     <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
                         {% csrf_token %}
-                        <button id="signOutBtn" type="submit">Logout</button>
+                        <button id="signOutBtn" type="submit" style="font-style: italic; padding-left: 5px; font-weight: 900; font-family: fangsong;">Logout</button>
                     </form>
                 </li>
             {% else %}
