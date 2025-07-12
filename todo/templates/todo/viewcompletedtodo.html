@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label for="Memo">Memo</label>
-                    <textarea name="Memo" rows="5" class="form-control" id="Memo" >{{ todo.Memo }}</textarea>
+                    <textarea name="Memo" rows="5" class="form-control" id="Memo" {% if locked %} disabled {% endif %}>{{ todo.Memo }}</textarea>
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" name="Important" class="form-check-input" id="Important" {% if todo.Important %}checked{% endif %}>

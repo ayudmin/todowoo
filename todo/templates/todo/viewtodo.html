@@ -19,22 +19,22 @@
                     {{ error }}
                 </div>
             {% endif %}
-            <form method="POST">
+            <form method="POST" {% if locked %}  class="locked" {% endif %}>
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="Title">Title</label>
-                    <input type="text" name="Title" class="form-control" id="Title" value="{{ todo.Title }}" required>
+                    <input type="text" name="Title"  id="Title" class="form-control" value="{{ todo.Title }}" required {% if locked %} disabled {% endif %} >
                 </div>
                 <div class="form-group">
                     <label for="Memo">Memo</label>
-                    <textarea name="Memo" rows="5" class="form-control" id="Memo" >{{ todo.Memo }}</textarea>
+                    <textarea name="Memo" rows="5" class="form-control" id="Memo" {% if locked %} disabled {% endif %} >{{ todo.Memo }}</textarea>
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" name="Important" class="form-check-input" id="Important" {% if todo.Important %}checked{% endif %}>
                     <label class="form-check-label" for="Important">Important</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-success" onclick="$('#complete').click()">Complete</button>
+                <button type="submit"  {% if no_save %} class="btn btn-primary no-save" {% else %} class="btn btn-primary" {% endif %}>Save</button>
+                <button type="button" onclick="$('#complete').click()"  {% if no_save %} class="btn btn-success no-save" {% else %} class="btn btn-success" {% endif %}>Complete</button>
                 <button type="button" class="btn btn-danger" onclick="$('#delete').click()">Delete</button>
             </form>
         </div>

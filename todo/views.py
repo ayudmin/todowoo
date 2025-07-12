@@ -102,11 +102,20 @@ def currenttodos(request):
 def viewtodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'GET':
-        if find_file(todo.Title):
-            return render(request, 'todo/viewtodo.html', {'todo': todo, 'file': todo.file.file})
-        else:
-            form = TodoForm(instance=todo)
-            return render(request, 'todo/viewtodo.html', {'todo': todo, 'form': form})
+        disabled_todo = True
+        disabled_todo_save = True
+        todos = Todo.objects.filter(user=request.user, Datecompleted__isnull=False).order_by('Datecompleted')
+        for todo_date in todos:
+            if todo.pk == todo_date.pk:
+                if find_file(todo.Title):
+                    return render(request, 'todo/viewcompletedtodo.html', {'todo': todo, 'file': todo.file.file, 'locked': disabled_todo, 'no_save': disabled_todo_save})
+                else:
+                    form = TodoForm(instance=todo)
+                    return render(request, 'todo/viewtodo.html', {'todo': todo, 'form': form, 'locked': disabled_todo, 'no_save': disabled_todo_save })
+            else:
+                return render(request, 'todo/viewtodo.html',
+                              {'todo': todo})
+
     else:
         try:
             form = TodoForm(request.POST, instance=todo)
