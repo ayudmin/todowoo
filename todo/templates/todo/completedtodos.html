@@ -3,7 +3,11 @@
 {% block content %}
     <div class="row justify-content-center mt-5">
         <div class="col-md-10">
-            <h1>Completed Todos</h1>
+            {% if todos %}
+                 <h1>{{ todos.count }} Completed Todo{{ todos.count|pluralize }}</h1>
+            {% else %}
+                <h1>Completed Todos</h1>
+            {% endif %}
         </div>
     </div>
     <div class="row justify-content-center mt-5 mb-5">
